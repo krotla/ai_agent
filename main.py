@@ -1,17 +1,26 @@
 import os
+import sys
 from dotenv import load_dotenv
 from google import genai
 
-PROMPT = "Why is Boot.dev such a great place to learn backend development? Use one paragraph maximum."
+# PROMPT = "Why is Boot.dev such a great place to learn backend development? Use one paragraph maximum."
 
-load_dotenv()
-api_key = os.environ.get("GEMINI_API_KEY")
+def main():
+    cmd_args = sys.argv
+    if len(cmd_args) <= 1:
+        print("Program needs prompt as an argument! Exit immediately!")
+        sys.exit(1)
 
-client = genai.Client(api_key=api_key)
+    load_dotenv()
+    api_key = os.environ.get("GEMINI_API_KEY")
 
-response = client.models.generate_content(
-    model='gemini-2.0-flash-001', contents=PROMPT
-)
-print(response.text + "\n")
-print(f"Prompt tokens: {response.usage_metadata.prompt_token_count}\n")
-print(f"Response tokens: {response.usage_metadata.candidates_token_count}")
+    client = genai.Client(api_key=api_key)
+
+    response = client.models.generate_content(
+        model='gemini-2.0-flash-001', contents=cmd_args[1]
+    )
+    print(response.text + "\n")
+    print(f"Prompt tokens: {response.usage_metadata.prompt_token_count}\n")
+    print(f"Response tokens: {response.usage_metadata.candidates_token_count}")
+
+main()
