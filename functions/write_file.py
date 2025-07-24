@@ -1,5 +1,4 @@
 import os
-from config import TRUNCATE_CHARACTER_LIMIT
 
 
 def write_file(working_directory, file_path, content):

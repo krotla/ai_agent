@@ -2,6 +2,7 @@ import unittest
 from functions.get_files_info import get_files_info
 from functions.get_file_content import get_file_content
 from functions.write_file import write_file
+from functions.run_python import run_python_file
 
 
 class TestAiAgent(unittest.TestCase):
@@ -63,18 +64,40 @@ class TestAiAgent(unittest.TestCase):
         # print("Result for writing to 'ole/ale/text.txt' file")
         # print(result)
 
-        result = write_file("calculator", "lorem.txt", "wait, this isn't lorem ipsum")
-        print("Result for writing to 'lorem.txt' file")
+        # result = write_file("calculator", "lorem.txt", "wait, this isn't lorem ipsum")
+        # print("Result for writing to 'lorem.txt' file")
+        # print(result)
+        
+        # result = write_file("calculator", "pkg/morelorem.txt", "lorem ipsum dolor sit amet")
+        # print("Result for writing to 'pkg/morelorem.tx' file")
+        # print(result)
+        
+        # result = write_file("calculator", "/tmp/temp.txt", "this should not be allowed")
+        # print("Result for writing to not existing file")
+        # print(result)
+
+        # Execution tests
+        #----------------
+
+        result = run_python_file("calculator", "main.py")
+        print("Result for executing 'main.py'")
         print(result)
         
-        result = write_file("calculator", "pkg/morelorem.txt", "lorem ipsum dolor sit amet")
-        print("Result for writing to 'pkg/morelorem.tx' file")
+        result = run_python_file("calculator", "main.py", ["3 + 5"])
+        print("Result for executing 'main.py' with arguments")
         print(result)
         
-        result = write_file("calculator", "/tmp/temp.txt", "this should not be allowed")
-        print("Result for writing to not existing file")
+        result = run_python_file("calculator", "tests.py")
+        print("Result for executing 'tests.py'")
+        print(result)
+
+        result = run_python_file("calculator", "../main.py")
+        print("Result for executing '../main.py'")
         print(result)
         
+        result = run_python_file("calculator", "nonexistent.py")
+        print("Result for executing non existing file")
+        print(result)        
 
 if __name__ == "__main__":
     unittest.main()
