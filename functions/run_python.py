@@ -13,7 +13,7 @@ schema_run_python_file = types.FunctionDeclaration(
                 description="The file path of the Python file to run, relative to the working directory.",
             ),
             "args": types.Schema(
-                type=types.Type.ARRAY,
+                type=types.Type.STRING,
                 description="Arguments for the Python file to run.",
             ),
         },
