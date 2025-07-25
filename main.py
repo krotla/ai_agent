@@ -8,6 +8,7 @@ from functions.get_files_info import schema_get_files_info
 from functions.get_file_content import schema_get_file_content
 from functions.write_file import schema_write_file
 from functions.run_python import schema_run_python_file
+from functions.call_function import call_function
 
 # PROMPT = "Why is Boot.dev such a great place to learn backend development? Use one paragraph maximum."
 
@@ -56,7 +57,11 @@ def main():
         print(f"User prompt: {cmd_args[1]}\n")
     if response.function_calls:
         for function_call_part in response.function_calls:
-            print(f"Calling function: {function_call_part.name}({function_call_part.args})")
+            function_call_result = call_function(function_call_part, verbose)
+            if not function_call_result.parts[0].function_response.response:
+                raise Exception("Fatal ERROR! No result from called function.")
+            if verbose:
+                print(f"-> {function_call_result.parts[0].function_response.response}")
     else:
         print(response.text)
     if verbose:
